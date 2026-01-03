@@ -87,9 +87,26 @@ claude mcp add --scope user gemini-collab python3 ~/.claude-mcp-servers/gemini-c
 - Check your API key is valid
 - Ensure Python has `google-generativeai` installed: `pip install google-generativeai`
 
-## 🔑 Update API Key
+## Configuration
 
-Edit `~/.claude-mcp-servers/gemini-collab/server.py` and replace the API key.
+### API Key
+
+Set your Gemini API key via environment variable:
+```bash
+export GEMINI_API_KEY=your_api_key_here
+```
+
+Or edit `~/.claude-mcp-servers/gemini-collab/server.py` directly.
+
+### Model Selection
+
+By default, the server uses `gemini-3-flash-preview`. To use a different model:
+
+```bash
+export GEMINI_MODEL=gemini-1.5-pro
+```
+
+Available models: `gemini-3-flash-preview`, `gemini-2.0-flash`, `gemini-1.5-pro`, etc.
 
 ## 🤝 Contributing
 

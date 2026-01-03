@@ -8,6 +8,9 @@ import json
 import sys
 import os
 from typing import Dict, Any, Optional
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Ensure unbuffered output
 sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 1)
@@ -22,6 +25,7 @@ try:
     
     # Get API key from environment or use the one provided during setup
     API_KEY = os.environ.get("GEMINI_API_KEY", "YOUR_API_KEY_HERE")
+    GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3-flash-preview")
     if API_KEY == "YOUR_API_KEY_HERE":
         print(json.dumps({
             "jsonrpc": "2.0",
@@ -33,7 +37,8 @@ try:
         sys.exit(1)
     
     genai.configure(api_key=API_KEY)
-    model = genai.GenerativeModel('gemini-2.0-flash')
+    model = genai.GenerativeModel(GEMINI_MODEL)
+    print(f"[gemini-collab] Using model: {GEMINI_MODEL}", file=sys.stderr, flush=True)
     GEMINI_AVAILABLE = True
 except Exception as e:
     GEMINI_AVAILABLE = False
