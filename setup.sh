@@ -49,14 +49,15 @@ mkdir -p ~/.claude-mcp-servers/gemini-collab
 echo "📋 Installing server..."
 cp server.py ~/.claude-mcp-servers/gemini-collab/
 
-# Replace API key in server
-sed -i.bak "s/YOUR_API_KEY_HERE/$API_KEY/g" ~/.claude-mcp-servers/gemini-collab/server.py
-rm ~/.claude-mcp-servers/gemini-collab/server.py.bak
+# Create .env file with API key
+echo "📁 Creating configuration..."
+echo "GEMINI_API_KEY=$API_KEY" > ~/.claude-mcp-servers/gemini-collab/.env
+chmod 600 ~/.claude-mcp-servers/gemini-collab/.env
 
 # Install Python dependencies
 echo ""
 echo "📦 Installing Python dependencies..."
-pip3 install google-generativeai --quiet
+pip3 install google-generativeai python-dotenv --quiet
 
 # Remove any existing MCP configuration
 echo ""

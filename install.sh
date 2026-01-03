@@ -28,7 +28,7 @@ fi
 echo "📥 Downloading Claude-Gemini MCP Server..."
 TEMP_DIR=$(mktemp -d)
 cd "$TEMP_DIR"
-git clone https://github.com/RaiAnsar/claude_code-gemini-mcp.git
+git clone https://github.com/kustomrtr/claude_code-gemini-mcp.git
 
 # Get API key
 echo ""
