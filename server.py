@@ -12,6 +12,16 @@ from dotenv import load_dotenv
 
 load_dotenv(os.path.join(os.path.dirname(os.path.abspath(__file__)), '.env'))
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def load_prompt(name: str) -> str:
+    """Load a prompt template from the prompts directory."""
+    prompt_path = os.path.join(SCRIPT_DIR, "prompts", f"{name}.md")
+    with open(prompt_path, "r") as f:
+        return f.read()
+
+
 # Ensure unbuffered output
 sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 1)
 sys.stderr = os.fdopen(sys.stderr.fileno(), 'w', 1)
@@ -191,18 +201,8 @@ def handle_tool_call(request_id: Any, params: Dict[str, Any]) -> Dict[str, Any]:
             else:
                 code = arguments.get("code", "")
                 focus = arguments.get("focus", "general")
-                prompt = f"""Please review this code with a focus on {focus}:
-
-```
-{code}
-```
-
-Provide specific, actionable feedback on:
-1. Potential issues or bugs
-2. Security concerns
-3. Performance optimizations
-4. Best practices
-5. Code clarity and maintainability"""
+                prompt_template = load_prompt("code_review")
+                prompt = prompt_template.format(focus=focus, code=code)
                 result = call_gemini(prompt, 0.2)
             
         elif tool_name == "gemini_brainstorm":
@@ -211,10 +211,9 @@ Provide specific, actionable feedback on:
             else:
                 topic = arguments.get("topic", "")
                 context = arguments.get("context", "")
-                prompt = f"Let's brainstorm about: {topic}"
-                if context:
-                    prompt += f"\n\nContext: {context}"
-                prompt += "\n\nProvide creative ideas, alternatives, and considerations."
+                context_section = f"Context: {context}" if context else ""
+                prompt_template = load_prompt("brainstorm")
+                prompt = prompt_template.format(topic=topic, context_section=context_section)
                 result = call_gemini(prompt, 0.7)
             
         else:
