@@ -103,10 +103,16 @@ Or edit `~/.claude-mcp-servers/gemini-collab/server.py` directly.
 By default, the server uses `gemini-3-flash-preview`. To use a different model:
 
 ```bash
-export GEMINI_MODEL=gemini-1.5-pro
+export GEMINI_MODEL=gemini-3-pro-preview
 ```
 
-Available models: `gemini-3-flash-preview`, `gemini-2.0-flash`, `gemini-1.5-pro`, etc.
+Available models ([full list](https://ai.google.dev/gemini-api/docs/models)):
+- `gemini-3-pro-preview` - Latest, most capable
+- `gemini-3-flash-preview` - Latest, fast and efficient
+- `gemini-2.5-pro` - Stable production model
+- `gemini-2.5-flash` - Stable, balanced performance
+- `gemini-2.5-flash-lite` - Stable, lightweight
+- `gemini-2.0-flash` - Previous generation
 
 ## 🤝 Contributing
 
